@@ -2,6 +2,8 @@
 
 Enable physics for gears placed so you can place your stuff around naturally, or pile up canned foods.
 
+The goal is a somewhat acceptable alternative to SillyMod that is usable in survival.
+
 First, enable the mod by pressing the Toggle Key (default is O), this is intended so players must intentionally use the mod.
 
 Just like in Vanilla, right click to move gears, when it's placed, physics is enabled for 5 seconds.
