@@ -3,7 +3,7 @@
 
     <PropertyGroup>
         <!--This needs to be changed for the mod to compile.-->
-        <TheLongDarkPath>..\..\..\</TheLongDarkPath>
+        <TheLongDarkPath>..\..\</TheLongDarkPath>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -52,7 +52,7 @@
         <Reference Include="Il2CppInterop.Common" />
         <Reference Include="Il2CppInterop.Runtime" />
         <Reference Include="ModSettings">
-          <HintPath>..\..\..\Mods\ModSettings.dll</HintPath>
+          <HintPath>..\..\Mods\ModSettings.dll</HintPath>
         </Reference>
         <Reference Include="Tomlet" />
         <Reference Include="Assembly-CSharp-firstpass" />
