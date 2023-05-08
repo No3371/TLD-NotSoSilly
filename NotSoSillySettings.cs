@@ -21,6 +21,8 @@ namespace NotSoSillyMod
         public KeyCode retrieveKey = KeyCode.Backspace;
         [Name("Toggle Gear Gravity")]
         public KeyCode toggle = KeyCode.O;
+        [Name("Toggle Collision Audio")]
+        public bool audio = true;
 
     }
 }

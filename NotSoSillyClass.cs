@@ -22,9 +22,19 @@ namespace NotSoSillyMod
             if (InputManager.GetKeyDown(InputManager.m_CurrentContext, Settings.options.toggle))
             {
                 toggle = !toggle;
+                MelonCoroutines.Start(Warning());
                 MelonLogger.Msg("NotSoSilly: " + toggle);
             }
+
+            IEnumerator Warning ()
+            {
+                InterfaceManager.GetPanel<Panel_HUD>().DisplayWarningMessage("NotSoSilly: " + toggle);
+                yield return new WaitForSeconds(2);
+                InterfaceManager.GetPanel<Panel_HUD>().ClearWarningMessage();
+            }
         }
+
+
 
 
         [HarmonyPatch(typeof(PlayerManager), nameof(PlayerManager.ExitMeshPlacement))]
@@ -35,24 +45,31 @@ namespace NotSoSillyMod
                 // damn it we can't do early return in prefixes
                 if (toggle)
                 {
-                    GameObject go = __instance.m_ObjectToPlaceGearItem.gameObject;
-                    if (go == null) MelonLogger.Msg("No gameobject ?????");
+                    GearItem m_ObjectToPlaceGearItem = __instance.m_ObjectToPlaceGearItem;
+                    GameObject go = m_ObjectToPlaceGearItem.gameObject;
+                    // if (go == null) MelonLogger.Msg("No gameobject ?????");
 
-                    var rg = go.GetComponentsInChildren<Rigidbody>();
-                    var mr = go.GetComponentsInChildren<MeshRenderer>(true);
+                    var rg = go.GetComponentsInChildren<Rigidbody>(true);
+                    Renderer[] renderers = go.GetComponentsInChildren<MeshRenderer>(true);
 
                     if (rg != null && rg.Count > 0 && rg[0].gameObject != go)
                         MelonLogger.Msg("Gear has rigidbodies in child, unsupported, skipping");
-                    else if (mr == null || mr.Count == 0)
+                    else if ((renderers == null || renderers.Length == 0)
+                          && ((renderers = go.GetComponentsInChildren<SkinnedMeshRenderer>(true)) == null
+                          || renderers.Length == 0)) // uuuuuhhhhhhh
+                    {
+                        
                         MelonLogger.Msg("Gear has no mesh");
+                    }
                     else 
                     {
-
                         var p = go.GetComponent<TempPhysic>();
                         if (p != null) p.enabled = false;
                         else p = go.AddComponent<TempPhysic>();
+                        p.Gear = m_ObjectToPlaceGearItem;
                         p.SetAt = Time.time;
-                        p.meshes = mr;
+                        p.meshes.Clear();
+                        p.meshes.AddRange(renderers);
                         p.enabled = true;
 
                         // // General colliders are possible (ex: BoxCollider)
@@ -65,7 +82,7 @@ namespace NotSoSillyMod
                         //     {
                         //         p.TemporalColider = true;
                         //         p.Collider = mr[0].gameObject.AddComponent<MeshCollider>();
-                        //         // MelonLogger.Msg("Adding MeshCollider");
+                                // MelonLogger.Msg("Adding MeshCollider");
                         //     }
                         // }
 
@@ -94,6 +111,7 @@ namespace NotSoSillyMod
         [RegisterTypeInIl2Cpp]
         class TempPhysic : MonoBehaviour
         {
+            internal GearItem Gear { get; set;}
             internal static float lastEnable;
             internal static int layer = LayerMask.NameToLayer("Gear");
             public TempPhysic(IntPtr intPtr) : base(intPtr) { }
@@ -103,17 +121,21 @@ namespace NotSoSillyMod
             public Rigidbody RigidBody { get; set; }
             public bool TemporalRigidbody { get; set; }
             public float SetAt { get; set; }
-            internal MeshRenderer[] meshes;
+            internal List<Renderer> meshes = new List<Renderer>();
             bool noOp;
+            bool lastToggleOp = false;
 
             void OnEnable ()
             {
-
-                if ((Time.time - lastEnable) > 10.5f)
+                if (lastToggleOp != false)
+                    MelonLogger.Warning("Expecting disabled!");
+                lastToggleOp = true;
+                noOp = false;
+                if ((Time.time - lastEnable) > 10f)
                 {
-                    MelonLogger.Msg("Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
+                    // MelonLogger.Msg("Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
                     Physics.IgnoreLayerCollision(layer, layer, false);
-                    MelonLogger.Msg("-Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
+                    // MelonLogger.Msg("-Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
                 }
                 lastEnable = Time.time;
                 // General colliders are possible (ex: BoxCollider)
@@ -121,13 +143,13 @@ namespace NotSoSillyMod
                 this.Collider = gameObject.GetComponent<Collider>();
                 if (!this.Collider)
                 {
-                    if (this.meshes != null && this.meshes.Length > 1)
+                    if (this.meshes != null && this.meshes.Count > 1)
                     {
                         if (!this.Collider)
                         {
                             this.TemporalColider = true;
                             this.Collider = meshes[0].gameObject.AddComponent<MeshCollider>();
-                            // MelonLogger.Msg("Adding MeshCollider");
+                            MelonLogger.Msg("Adding MeshCollider to " + this.gameObject.name);
                         }
                     }
                     else
@@ -151,6 +173,7 @@ namespace NotSoSillyMod
                 this.RigidBody = this.GetComponent<Rigidbody>();
                 if (!this.RigidBody)
                 {
+                    MelonLogger.Msg("Adding RigidBody to " + this.gameObject.name);
                     this.RigidBody = this.gameObject.AddComponent<Rigidbody>();
                     this.TemporalRigidbody = true;
                 }
@@ -160,7 +183,7 @@ namespace NotSoSillyMod
                 this.RigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
                 this.RigidBody.solverIterations = 60;
 
-                MelonLogger.Msg(string.Format("TempPhysics enabled: {0}, layer: {1}", this.gameObject.name, this.gameObject.layer));
+                // MelonLogger.Msg(string.Format("TempPhysics enabled: {0}, layer: {1}", this.gameObject.name, this.gameObject.layer));
                 
                 if (TemporalRigidbody)
                 {
@@ -171,8 +194,11 @@ namespace NotSoSillyMod
             
             void OnDisable ()
             {
+                if (lastToggleOp != true)
+                    MelonLogger.Warning("Expecting enabled!");
+                lastToggleOp = false;
                 if (noOp) return;
-                MelonLogger.Msg("TempPhysics disabled: " + this.gameObject?.name?? "???");
+                // MelonLogger.Msg("TempPhysics disabled: " + this.gameObject?.name?? "???");
                 if ((this.transform.position - GameManager.GetPlayerTransform().position).magnitude > 10f)
                 {
                     this.transform.position = GameManager.GetPlayerTransform().position + Vector3.up;
@@ -189,15 +215,22 @@ namespace NotSoSillyMod
                 if ((Time.time - lastEnable) > 9.5f) 
                 {
                     
-                    MelonLogger.Msg("Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
+                    // MelonLogger.Msg("Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
                     Physics.IgnoreLayerCollision(layer, layer, true);
-                    MelonLogger.Msg("-Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
+                    // MelonLogger.Msg("-Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
                 }
             }
 
             void Update ()
             {
                 if (noOp) return;
+                if (GameManager.GetPlayerManagerComponent().m_InspectModeActive)
+                {
+                    MelonLogger.Msg("Cancel TempPhysics on inspect");
+                    this.enabled = false;
+                    MonoBehaviour.DestroyImmediate(this);
+                    return;
+                }
                 if (Time.time - SetAt > 10)
                 {
                     this.enabled = false;
@@ -211,6 +244,32 @@ namespace NotSoSillyMod
                     MonoBehaviour.DestroyImmediate(this);
                     return;
                 }
+            }
+
+            float lastPlayback;
+            void OnCollisionEnter (Collision collision)
+            {
+                if (!Settings.options.audio) return;
+                switch (collision.other.gameObject.layer)
+                {
+                    case 14: // Player
+                    case 16: // NPC
+                        return;
+                }
+                if (Time.time - lastPlayback < 0.8f) return;
+                var r = UnityEngine.Random.Range(0f, 1f);
+                if (Gear?.GearItemData == null) return;
+                
+                if (Gear.GearItemData.PickupAudio != null && r > 0.5d) GameAudioManager.PlaySound(Gear.GearItemData.PickupAudio, GameManager.GetPlayerObject());
+                if (Gear.GearItemData.CookingSlotPlacementAudio != null && r > 0.4d) GameAudioManager.PlaySound(Gear.GearItemData.CookingSlotPlacementAudio, GameManager.GetPlayerObject());
+                if (Gear.GearItemData.StowAudio != null && r > 0.3d) GameAudioManager.PlaySound(Gear.GearItemData.StowAudio, GameManager.GetPlayerObject());
+                if (Gear.GearItemData.PutBackAudio != null && r > 0.2d) GameAudioManager.PlaySound(Gear.GearItemData.PutBackAudio, GameManager.GetPlayerObject());
+                if (Gear.GearItemData.PickupAudio != null) GameAudioManager.PlaySound(Gear.GearItemData.PickupAudio, GameManager.GetPlayerObject());
+                else if (Gear.GearItemData.PickupAudio != null) GameAudioManager.PlaySound(Gear.GearItemData.PickupAudio, GameManager.GetPlayerObject());
+                else if (Gear.GearItemData.CookingSlotPlacementAudio != null && r > 0.4d) GameAudioManager.PlaySound(Gear.GearItemData.CookingSlotPlacementAudio, GameManager.GetPlayerObject());
+                else if (Gear.GearItemData.StowAudio != null) GameAudioManager.PlaySound(Gear.GearItemData.StowAudio, GameManager.GetPlayerObject());
+                else if (Gear.GearItemData.PutBackAudio != null) GameAudioManager.PlaySound(Gear.GearItemData.PutBackAudio, GameManager.GetPlayerObject());
+                lastPlayback = Time.time;
             }
         }
 
