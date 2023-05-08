@@ -5,7 +5,11 @@ Enable physics for gears placed so you can place your stuff around naturally, or
 
 The initial goal is a SillyMod alternative that is practical to use in survival.
 
+**Collision**  
+
 https://user-images.githubusercontent.com/1814971/236769588-db873562-0dce-46c0-b44f-2a4db3cffaef.mp4
+
+**Audio**  
 
 https://user-images.githubusercontent.com/1814971/236840729-d8a546d1-7727-46de-8a3a-e4a024d14429.mp4
 
