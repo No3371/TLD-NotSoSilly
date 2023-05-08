@@ -26,13 +26,13 @@ If the item is too far away when the time's up, it will be teleported back to yo
 You can also press the Retrieve Key (default: Backspace) to teleport items back to you. (Only possible in the 10 seconds)
 
 ## Notes
-- It's a good idea to **immediately** press Retrieve when you see your gear falls into walls and grounds. The automatic retrieving won't work when the gear falls and stayed on something behind the walls/grounds. You could lose the gear for good.
+- It's a good idea to **immediately** press Retrieve when you see your gear falls into walls and grounds. The automatic retrieving won't work when the gear falls and stays on something inside the walls/grounds. You could lose the gear for good.
 
-- It's a good idea to **immediately** press Retrieve when you when the gear rolls to somewhere out of reach. You could lose the gear for good.
+- It's a good idea to **immediately** press Retrieve when you when the gear rolls to somewhere out of reach, like somewhere blocked by unbreakble objects. You could lose the gear for good.
 
 - Some items just won't work because how it's structured, like bedrolls, they have 2 modes: dropped/placed. These kinds of gears are hard to handle, so they are skipped.
 
-- The mod temporarily enables collision between gears for about 10 seconds after you placed a gear. So gears you placed will actually piles up.
+- The mod temporarily enables collision between gears for about 10 seconds after you placed a gear. So gears you placed will actually collide and pile up.
 
 # Installation
 - Drop into `../Mods/`
