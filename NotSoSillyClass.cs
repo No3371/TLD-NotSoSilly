@@ -149,7 +149,7 @@ namespace NotSoSillyMod
                         {
                             this.TemporalColider = true;
                             this.Collider = meshes[0].gameObject.AddComponent<MeshCollider>();
-                            MelonLogger.Msg("Adding MeshCollider to " + this.gameObject.name);
+                            // MelonLogger.Msg("Adding MeshCollider to " + this.gameObject.name);
                         }
                     }
                     else
@@ -173,7 +173,7 @@ namespace NotSoSillyMod
                 this.RigidBody = this.GetComponent<Rigidbody>();
                 if (!this.RigidBody)
                 {
-                    MelonLogger.Msg("Adding RigidBody to " + this.gameObject.name);
+                    // MelonLogger.Msg("Adding RigidBody to " + this.gameObject.name);
                     this.RigidBody = this.gameObject.AddComponent<Rigidbody>();
                     this.TemporalRigidbody = true;
                 }
