@@ -4,17 +4,26 @@ Enable physics for gears placed so you can place your stuff around naturally, or
 
 The goal is a somewhat acceptable alternative to SillyMod that is usable in survival.
 
+### While not so silly, just like SillyMod, gears may disappear when physics is enabled, use at your own risk.
+
+## Usage
+
 First, enable the mod by pressing the Toggle Key (default is O), this is intended so players must intentionally use the mod.
 
-Just like in Vanilla, right click to move gears, when it's placed, physics is enabled for 5 seconds.
+Just like in Vanilla, right click to move gears, when it's placed, physics is enabled for 10 seconds.
 
 If the item is too far away when the time's up, it will be teleported back to you. So no cheating and no need to worry about things fall into the ground (yes, that could happen).
 
-You can also press the Retrieve Key (default: Backspace) to teleport items back to you. (Only possible in the 5 seconds)
+You can also press the Retrieve Key (default: Backspace) to teleport items back to you. (Only possible in the 10 seconds)
 
-#### It is a good idea to press Retrieve **immediately** when you see your gear falls into walls and grounds, because if somehow it falls on something in the walls/grounds and does not fall away, you could lose it for good.
+## Notes
+- It's a good idea to **immediately** press Retrieve when you see your gear falls into walls and grounds. The automatic retrieving won't work when the gear falls and stayed on something behind the walls/grounds. You could lose the gear for good.
 
-(I started with [HAHAYOUDEAD's SillyMod](https://github.com/HAHAYOUDEAD/SillyMod) but eventually almost fully rewrite the mod)
+- It's a good idea to **immediately** press Retrieve when you when the gear rolls to somewhere out of reach. You could lose the gear for good.
+
+- Some items just won't work because how it's structured, like bedrolls, they have 2 modes: dropped/placed. These kinds of gears are hard to handle, so they are skipped.
+
+- The mod temporarily enables collision between gears for about 10 seconds after you placed a gear. So gears you placed will actually piles up.
 
 # Installation
 - Drop into `../Mods/`
