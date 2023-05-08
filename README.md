@@ -1,14 +1,15 @@
 # NotSoSilly
 
-https://user-images.githubusercontent.com/1814971/236769588-db873562-0dce-46c0-b44f-2a4db3cffaef.mp4
-
-https://user-images.githubusercontent.com/1814971/236838594-3342f180-3b6e-4706-957f-9f32eeda2c58.mp4
 
 Enable physics for gears placed so you can place your stuff around naturally, or pile up canned foods.
 
-The goal is a somewhat acceptable alternative to SillyMod that is usable in survival.
+The goal is a somewhat acceptable alternative to SillyMod that is practical to use in survival.
 
-### While not so silly, just like SillyMod, gears may disappear when physics is enabled, use at your own risk.
+https://user-images.githubusercontent.com/1814971/236769588-db873562-0dce-46c0-b44f-2a4db3cffaef.mp4
+
+https://user-images.githubusercontent.com/1814971/236840729-d8a546d1-7727-46de-8a3a-e4a024d14429.mp4
+
+### While not so silly, just like SillyMod, physics enabled gears may disappear **if you don't utilize the **Retrieve** feature, use at your own risk.
 
 ## Usage
 
