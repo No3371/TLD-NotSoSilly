@@ -13,7 +13,7 @@ https://user-images.githubusercontent.com/1814971/236769588-db873562-0dce-46c0-b
 
 https://user-images.githubusercontent.com/1814971/236840729-d8a546d1-7727-46de-8a3a-e4a024d14429.mp4
 
-### While not so silly, just like SillyMod, physics enabled gears may disappear **if you don't utilize the **Retrieve** feature, use at your own risk.
+### While not so silly, just like SillyMod, physics enabled gears may disappear **if you don't utilize the **Retrieve** feature**, use at your own risk.
 
 ## Usage
 
