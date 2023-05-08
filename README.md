@@ -1,5 +1,9 @@
 # NotSoSilly
 
+
+https://user-images.githubusercontent.com/1814971/236769588-db873562-0dce-46c0-b44f-2a4db3cffaef.mp4
+
+
 Enable physics for gears placed so you can place your stuff around naturally, or pile up canned foods.
 
 The goal is a somewhat acceptable alternative to SillyMod that is usable in survival.
