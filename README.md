@@ -21,11 +21,13 @@ First, enable the mod by pressing the Toggle Key (default is O), this is intende
 
 Just like in Vanilla, right click to move gears, when it's placed, physics is enabled for 10 seconds.
 
-If the item is too far away when the time's up, it will be teleported back to you. So no cheating and no need to worry about things fall into the ground (yes, that could happen).
+If the item is too far away (10m) when the time's up, it will be teleported back to you. So no cheating and no need to worry about things fall into the ground (yes, that could happen).
 
 You can also press the Retrieve Key (default: Backspace) to teleport items back to you. (Only possible in the 10 seconds)
 
+
 ## Notes
+
 - It's a good idea to **immediately** press Retrieve when you see your gear falls into walls and grounds. The automatic retrieving won't work when the gear falls and stays on something inside the walls/grounds. You could lose the gear for good.
 
 - It's a good idea to **immediately** press Retrieve when you when the gear rolls to somewhere out of reach, like somewhere blocked by unbreakble objects. You could lose the gear for good.
@@ -33,6 +35,8 @@ You can also press the Retrieve Key (default: Backspace) to teleport items back 
 - Some items just won't work because how it's structured, like bedrolls, they have 2 modes: dropped/placed. These kinds of gears are hard to handle, so they are skipped.
 
 - The mod temporarily enables collision between gears for about 10 seconds after you placed a gear. So gears you placed will actually collide and pile up.
+
+- The gears will be teleported back to you if they are too far (10m) after 10 seconds, it doesn't matter if it falls out of the world. Toggle off NotSoSilly (Default: O) before you are going to leave your newly placed gear immediately.
 
 # Installation
 - Drop into `../Mods/`

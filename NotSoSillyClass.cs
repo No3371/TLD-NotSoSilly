@@ -10,7 +10,7 @@ namespace NotSoSillyMod
 {
     public class NotSoSillyClass : MelonMod
     {
-        static bool toggle;
+        public static bool toggle;
         public override void OnInitializeMelon()
         {
             Settings.OnLoad();
@@ -199,7 +199,7 @@ namespace NotSoSillyMod
                 lastToggleOp = false;
                 if (noOp) return;
                 // MelonLogger.Msg("TempPhysics disabled: " + this.gameObject?.name?? "???");
-                if ((this.transform.position - GameManager.GetPlayerTransform().position).magnitude > 10f)
+                if (NotSoSillyClass.toggle && (this.transform.position - GameManager.GetPlayerTransform().position).magnitude > 10f)
                 {
                     this.transform.position = GameManager.GetPlayerTransform().position + Vector3.up;
                 }
