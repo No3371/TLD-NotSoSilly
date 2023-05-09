@@ -21,7 +21,7 @@ First, enable the mod by pressing the Toggle Key (default is O), this is intende
 
 Just like in Vanilla, right click to move gears, when it's placed, physics is enabled for 10 seconds.
 
-If the item is too far away (10m) when the time's up, it will be teleported back to you. So no cheating and no need to worry about things fall into the ground (yes, that could happen).
+If the item is too far away (10m) when the time's up, it will be teleported back to you. So no cheating and when things fall into the ground (yes, that could happen when physics enabled in this game) it may come back automatically (not 100%).
 
 You can also press the Retrieve Key (default: Backspace) to teleport items back to you. (Only possible in the 10 seconds)
 
