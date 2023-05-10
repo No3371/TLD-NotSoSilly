@@ -202,6 +202,7 @@ namespace NotSoSillyMod
                 if (NotSoSillyClass.toggle && (this.transform.position - GameManager.GetPlayerTransform().position).magnitude > 10f)
                 {
                     this.transform.position = GameManager.GetPlayerTransform().position + Vector3.up;
+                    MelonCoroutines.Start(Notification());
                 }
                 this.RigidBody.isKinematic = true;
                 if (TemporalColider && Collider != null)
@@ -270,6 +271,13 @@ namespace NotSoSillyMod
                 else if (Gear.GearItemData.StowAudio != null) GameAudioManager.PlaySound(Gear.GearItemData.StowAudio, GameManager.GetPlayerObject());
                 else if (Gear.GearItemData.PutBackAudio != null) GameAudioManager.PlaySound(Gear.GearItemData.PutBackAudio, GameManager.GetPlayerObject());
                 lastPlayback = Time.time;
+            }
+
+            IEnumerator Notification ()
+            {
+                InterfaceManager.GetPanel<Panel_HUD>().DisplayWarningMessage(string.Concat("NotSoSilly: ", this.gameObject.name, " is teleported back to you."));
+                yield return new WaitForSeconds(2);
+                InterfaceManager.GetPanel<Panel_HUD>().ClearWarningMessage();
             }
         }
 
