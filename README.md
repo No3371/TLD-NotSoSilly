@@ -34,11 +34,11 @@ You can also press the Retrieve Key (default: Backspace) to teleport items back 
 
 - Some gears just won't work because how it's structured, like bedrolls, they have 2 modes: dropped/placed. These kinds of gears are hard to handle, so they are skipped.
 
-- The mod temporarily enables collision between gears for about 10 seconds after you placed a gear. So gears you placed will actually collide and pile up.
+- The mod temporarily enables collision between gears for about 10 seconds after you placed down one, so gears you placed will actually collide and pile up.
 
 - The gears will be teleported back to you if they are too far (10m) after 10 seconds, it doesn't matter if it falls out of the world. Toggle off NotSoSilly (Default: O) before you are going to leave your newly placed gear immediately.
 
-- The mod only enables collision. Some gears may have a different, usually bigger collider than how it looks, these gears usually have a simple box shape collider.
+- The mod only enables collision. Some gears may have a different, usually larger collider than their visual representation, often using a simple box-shaped collider. Let's just say physics is not a major factor in this game, therefore physics accuracy is not prioritized.
 
 # Installation
 - Drop into `../Mods/`
