@@ -38,7 +38,7 @@ You can also press the Retrieve Key (default: Backspace) to teleport items back 
 
 - The gears will be teleported back to you if they are too far (10m) after 10 seconds, it doesn't matter if it falls out of the world. Toggle off NotSoSilly (Default: O) before you are going to leave your newly placed gear immediately.
 
-- The mod only enables collision. Some gears may have a different, usually larger collider than their visual representation, often using a simple box-shaped collider. Let's just say physics is not a major factor in this game, therefore physics accuracy is not prioritized.
+- The mod only enables collision, the original colliders are not modified. Some gears may have a different, usually larger collider than their visual representation, often using a simple box-shaped collider. Let's just say physics is not a major factor in this game, therefore physics accuracy is not prioritized.
 
 # Installation
 - Drop into `../Mods/`
