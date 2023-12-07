@@ -264,7 +264,7 @@ namespace NotSoSillyMod
                     case 16: // NPC
                         return;
                 }
-                if (Time.time - lastPlayback < 0.8f) return;
+                if (Time.time - lastPlayback < 0.65f) return;
                 var r = UnityEngine.Random.Range(0f, 1f);
                 if (Gear?.GearItemData == null) return;
                 
