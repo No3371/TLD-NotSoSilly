@@ -40,13 +40,19 @@ namespace NotSoSillyMod
         [HarmonyPatch(typeof(PlayerManager), nameof(PlayerManager.ExitMeshPlacement))]
         private static class DisablePhysicsCheck
         {
-            internal static void Prefix(ref PlayerManager __instance)
+            internal static bool Prefix(PlayerManager __instance)
             {
                 // damn it we can't do early return in prefixes
                 if (toggle)
                 {
                     GearItem m_ObjectToPlaceGearItem = __instance.m_ObjectToPlaceGearItem;
                     GameObject go = m_ObjectToPlaceGearItem.gameObject;
+                    if (m_ObjectToPlaceGearItem.IsAttachedToPlacePoint())
+                    {
+                        var p = go.GetComponent<TempPhysic>();
+                        if (p != null) MonoBehaviour.Destroy(p);
+                        return true;
+                    }
                     // if (go == null) MelonLogger.Msg("No gameobject ?????");
 
                     var rg = go.GetComponentsInChildren<Rigidbody>(true);
@@ -105,6 +111,7 @@ namespace NotSoSillyMod
                         // p.RigidBody.solverIterations = 30;
                     }
                 }
+                return true;
             }
         }
 
