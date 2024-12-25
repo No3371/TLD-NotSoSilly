@@ -126,6 +126,7 @@ namespace NotSoSillyMod
             public TempPhysic(IntPtr intPtr) : base(intPtr) { }
             public bool TemporalColider { get; set; }
             public Collider Collider { get; set; }
+            public Collider OriginalCollider { get; set; }
             public bool PreviousConvex { get; set; }
             public Rigidbody RigidBody { get; set; }
             public bool TemporalRigidbody { get; set; }
@@ -149,19 +150,17 @@ namespace NotSoSillyMod
                 lastEnable = Time.time;
                 // General colliders are possible (ex: BoxCollider)
                 // And if parent collider is availabe, use it
-                this.Collider = gameObject.GetComponent<Collider>();
-                if (!this.Collider)
+                this.OriginalCollider = this.Collider = gameObject.GetComponent<Collider>();
+                if (!this.Collider || this.Collider is not MeshCollider)
                 {
-                    if (this.meshes != null && this.meshes.Count > 1)
+                    if (this.meshes != null && this.meshes.Count == 1)
                     {
-                        if (!this.Collider)
-                        {
-                            this.TemporalColider = true;
-                            this.Collider = meshes[0].gameObject.AddComponent<MeshCollider>();
-                            // MelonLogger.Msg("Adding MeshCollider to " + this.gameObject.name);
-                        }
+                        this.TemporalColider = true;
+                        this.Collider = meshes[0].gameObject.AddComponent<MeshCollider>();
+                        // MelonLogger.Msg("Adding MeshCollider to " + this.gameObject.name);
                     }
-                    else
+                    
+                    if (!this.Collider)
                     {
                         var colliders = gameObject.GetComponentsInChildren<Collider>();
                         if (colliders == null || colliders.Length == 0)
@@ -170,8 +169,11 @@ namespace NotSoSillyMod
                             noOp = true;
                             return;
                         }
+                        this.Collider = colliders[0];
                     }
                 }
+                if (this.OriginalCollider != this.Collider)
+                    this.OriginalCollider.enabled = false;
 
                 if (this.Collider is MeshCollider mc && !this.TemporalColider)
                 {
@@ -189,7 +191,7 @@ namespace NotSoSillyMod
 
                 this.RigidBody.isKinematic = false;
                 this.RigidBody.interpolation = RigidbodyInterpolation.Interpolate;
-                this.RigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+                this.RigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
                 this.RigidBody.solverIterations = 60;
 
                 // MelonLogger.Msg(string.Format("TempPhysics enabled: {0}, layer: {1}", this.gameObject.name, this.gameObject.layer));
@@ -218,6 +220,9 @@ namespace NotSoSillyMod
                     MonoBehaviour.DestroyImmediate(Collider);
                 else
                     if (this.Collider is MeshCollider mc) mc.convex = PreviousConvex;
+
+                if (this.OriginalCollider != null)
+                    this.OriginalCollider.enabled = true;
 
                 if (TemporalRigidbody && RigidBody != null) 
                     MonoBehaviour.DestroyImmediate(RigidBody);
@@ -248,7 +253,7 @@ namespace NotSoSillyMod
                 }
                 else if (InputManager.GetKeyDown(InputManager.m_CurrentContext, Settings.options.retrieveKey))
                 {
-                    this.gameObject.GetComponent<Transform>().position = GameManager.GetPlayerTransform().position + Vector3.up * 0.25f;    
+                    this.gameObject.GetComponent<Transform>().position = GameManager.GetPlayerTransform().position + Vector3.up * 0.25f;
                     this.enabled = false;
                     MonoBehaviour.DestroyImmediate(this);
                     return;
