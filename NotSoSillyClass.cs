@@ -43,9 +43,9 @@ namespace NotSoSillyMod
             internal static bool Prefix(PlayerManager __instance)
             {
                 // damn it we can't do early return in prefixes
-                if (toggle)
+                GearItem m_ObjectToPlaceGearItem = __instance.m_ObjectToPlaceGearItem;
+                if (toggle && __instance.m_ObjectToPlaceGearItem != null)
                 {
-                    GearItem m_ObjectToPlaceGearItem = __instance.m_ObjectToPlaceGearItem;
                     GameObject go = m_ObjectToPlaceGearItem.gameObject;
                     if (m_ObjectToPlaceGearItem.IsAttachedToPlacePoint())
                     {
