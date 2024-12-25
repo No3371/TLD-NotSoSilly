@@ -220,9 +220,8 @@ namespace NotSoSillyMod
                 if (TemporalRigidbody && RigidBody != null) 
                     MonoBehaviour.DestroyImmediate(RigidBody);
 
-                if ((Time.time - lastEnable) > 9.5f) 
+                if ((Time.time - lastEnable) > 13.5f) 
                 {
-                    
                     // MelonLogger.Msg("Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
                     Physics.IgnoreLayerCollision(layer, layer, true);
                     // MelonLogger.Msg("-Layer2<->2: " + Physics.GetIgnoreLayerCollision(layer, layer));
@@ -239,7 +238,7 @@ namespace NotSoSillyMod
                     MonoBehaviour.DestroyImmediate(this);
                     return;
                 }
-                if (Time.time - SetAt > 10)
+                if (Time.time - SetAt > 14f)
                 {
                     this.enabled = false;
                     MonoBehaviour.DestroyImmediate(this);
