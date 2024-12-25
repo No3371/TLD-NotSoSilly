@@ -23,6 +23,8 @@ namespace NotSoSillyMod
         public KeyCode toggle = KeyCode.O;
         [Name("Toggle Collision Audio")]
         public bool audio = true;
+        [Name("Random Rotation Angle Range")]
+        public float rotationAngle = 10;
 
     }
 }

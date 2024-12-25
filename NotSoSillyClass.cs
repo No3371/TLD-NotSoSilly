@@ -76,6 +76,8 @@ namespace NotSoSillyMod
                         p.SetAt = Time.time;
                         p.meshes.Clear();
                         p.meshes.AddRange(renderers);
+                        p.transform.Translate(Vector3.up * UnityEngine.Random.Range(0.015f, 0.05f));
+                        p.transform.Rotate(UnityEngine.Random.Range(-Settings.options.rotationAngle, Settings.options.rotationAngle), UnityEngine.Random.Range(-Settings.options.rotationAngle, Settings.options.rotationAngle), UnityEngine.Random.Range(-Settings.options.rotationAngle, Settings.options.rotationAngle));
                         p.enabled = true;
 
                         // // General colliders are possible (ex: BoxCollider)
